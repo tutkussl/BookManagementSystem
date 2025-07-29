@@ -109,6 +109,11 @@ public class LibraryGUI extends Application {
         sortComboBox.setValue("By ID");
         sortComboBox.setPrefWidth(150);
 
+        sortComboBox.setOnAction(e -> {
+            String selectedSort = sortComboBox.getValue();
+            sortBooks(selectedSort);
+        });
+
         Button removeButton = new Button("Delete selected book");
         removeButton.setStyle("-fx-background-color: #ae739c; -fx-text-fill: white;");
         removeButton.setPrefWidth(150);
@@ -240,6 +245,29 @@ public class LibraryGUI extends Application {
         bookTable.getItems().clear();
         bookTable.getItems().addAll(library.getAllBooks());
         updateStatus("Table updated. Total " + library.getAllBooks().size() + " books.");
+    }
+
+    private void sortBooks(String sortType) {
+        ArrayList<Books> allBooks = library.getAllBooks();
+
+        switch (sortType) {
+            case "By ID":
+                allBooks.sort((b1, b2) -> Integer.compare(b1.getId(), b2.getId()));
+                break;
+            case "Alphabetical (A-Z)":
+                allBooks.sort((b1, b2) -> b1.getName().compareToIgnoreCase(b2.getName()));
+                break;
+            case "Alphabetical (Z-A)":
+                allBooks.sort((b1, b2) -> b2.getName().compareToIgnoreCase(b1.getName()));
+                break;
+            case "By author name":
+                allBooks.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
+                break;
+        }
+
+        bookTable.getItems().clear();
+        bookTable.getItems().addAll(allBooks);
+        updateStatus("Books sorted by: " + sortType);
     }
 
     private void clearForm() {

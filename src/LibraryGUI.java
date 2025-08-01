@@ -148,7 +148,7 @@ public class LibraryGUI extends Application {
         Label rightTitle = new Label("Add a new book");
         rightTitle.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-        Label nameLabel = new Label("Search a book:");
+        Label nameLabel = new Label("Book name:");
         nameField = new TextField();
         nameField.setPromptText("Enter a book name");
 
